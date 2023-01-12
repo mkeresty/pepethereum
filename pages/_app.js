@@ -101,6 +101,10 @@ export default function App({ Component, pageProps }) {
         <meta name="description" content="Dynamic On-Chain NFT" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+      />
         <style jsx global>{`
         html {
           font-family: ${roboto.style.fontFamily};
