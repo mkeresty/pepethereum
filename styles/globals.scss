@@ -105,7 +105,7 @@ a {
 }
 
 .comic {
-  font-family: 'Comic Neue';
+  font-family: 'Comic Neue', 'Roboto Mono';
 }
 
 .mintContainer {
@@ -121,7 +121,7 @@ a {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   margin-left: 35rem;
   margin-top: 6rem;
-  font-family: 'Comic Neue';
+  font-family: 'Comic Neue', 'Roboto Mono';
   background-color: hsl(53, 100%, 80%);
   position: relative;
 
@@ -163,7 +163,7 @@ a {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     margin-top: 6rem;
     margin-left: 0;
-    font-family: 'Comic Neue';
+    font-family: 'Comic Neue', 'Roboto Mono';
     background-color: hsl(53, 100%, 80%);
     position: fixed;
     z-index: 100;
@@ -188,7 +188,7 @@ a {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
     margin-top: -1rem;
     margin-left: 0;
-    font-family: 'Comic Neue';
+    font-family: 'Comic Neue', 'Roboto Mono';
     background-color: hsl(53, 100%, 80%);
     position: relative;
     z-index: 100;
