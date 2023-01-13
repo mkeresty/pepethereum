@@ -42,7 +42,7 @@ export default function MintComp(){
 
 
     const contractConfig = {
-        addressOrName: '0xD04AFd055A8Dc60EA40b5A3a6E997B8eB3af1675',
+        addressOrName: '0x7399206Fd5B8a9418fe2beaE55c4cA34DDDd5442',
         contractInterface: contractInterface,
       };
     
@@ -55,7 +55,7 @@ export default function MintComp(){
         args:[mintAmount],
         overrides: {
           from: address,
-          value: ethers.utils.parseEther('0').mul(mintAmount).toString()
+          value: ethers.utils.parseEther('0.03').mul(mintAmount).toString()
         },
       });
 
@@ -104,8 +104,6 @@ export default function MintComp(){
       
           setAddress(account.address);
       
-      
-      
         }
       
       }, [account]);
@@ -152,7 +150,7 @@ export default function MintComp(){
         </Select>
         <FormHelperText>0.03 eth/nft</FormHelperText>
       </FormControl>
-      <Button sx={{m: 1,  width: 135}} size="large" variant="contained" color="primary" disabled>Mint</Button>
+      <Button onClick={mint} sx={{m: 1,  width: 135}} size="large" variant="contained" color="primary" disabled>Mint</Button>
       </div>
 
         </div>
