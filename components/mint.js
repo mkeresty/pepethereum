@@ -120,6 +120,7 @@ export default function MintComp(){
             height={100}
             className="mintPic"
             />
+            {totalMinted}/250 minted!
             <div className="mel">
         <FormControl size="small" sx={{m: 1, width: 135}}>
         <Select
