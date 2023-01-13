@@ -151,7 +151,7 @@ export default function MintComp(){
         </Select>
         <FormHelperText>0.03 eth/nft</FormHelperText>
       </FormControl>
-      <Button onClick={mint} sx={{m: 1,  width: 135}} size="large" variant="contained" color="primary" >Mint</Button>
+      <Button onClick={() => mint?.()} sx={{m: 1,  width: 135}} size="large" variant="contained" color="primary" >Mint</Button>
       </div>
 
         </div>
