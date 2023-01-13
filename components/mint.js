@@ -70,7 +70,7 @@ export default function MintComp(){
 
       const mintP = () =>{
         if((mintAmount > 0) && address){
-          console.log("trying to mint: ", mintAmount)
+          console.log("trying to mint: ", mintAmount, address, totalMinted)
           contractWrite();
           console.log("report ",mintData2, isMintLoading2, isMintStarted2, mintError2 );
     
@@ -96,8 +96,10 @@ export default function MintComp(){
             isSuccess: txSuccess,
             error: txError,
           } = useWaitForTransaction({
-            hash: mintData?.hash,
+            hash: mintData2?.hash,
           });
+
+          console.log(txData, txSuccess, txError)
       
           const isMinted = txSuccess;
         
