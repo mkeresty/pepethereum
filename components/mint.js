@@ -14,16 +14,42 @@ import {
     usePrepareContractWrite,
     useWaitForTransaction,
   } from 'wagmi';
-import { ethers } from 'ethers';
-import contractInterface from '../contract-abi.json';
+import { ethers, BigNumber } from 'ethers';
+import contractInterface from './contract-abi.json';
 import FormHelperText from '@mui/material/FormHelperText';
+import { getProvider } from '@wagmi/core'
+ 
 
 
 export default function MintComp(){
 
-    const [address, setAddress] = useState();
-    const [mintAmount, setAmount] = useState(0);
-    const [totalMinted, setTotalMinted] = useState(0);
+  
+  const [addy, setAddress] = useState();
+  const [mintAmount, setAmount] = useState(0);
+  const [totalMinted, setTotalMinted] = useState(0);
+
+  const provider = getProvider();
+
+
+  const account = useAccount({
+    onConnect({ address, connector, isReconnected }) {
+      console.log('Connected', { address, connector, isReconnected })
+    },
+  });
+
+  const getS = async () =>{
+    const contractAddress = "0x7399206Fd5B8a9418fe2beaE55c4cA34DDDd5442";
+    const ct = new ethers.Contract(contractAddress, contractInterface, provider);
+    let newValue = await ct.totalSupply();
+    if (newValue){
+      setTotalMinted(newValue.toString())
+    }
+    
+  }
+
+
+
+
 
 
     const handleChange = (event) => {
@@ -32,13 +58,6 @@ export default function MintComp(){
 
 
     //---------------provider config-------------------------------------------
-    const { isConnected } = useAccount();
-
-    const account = useAccount({
-      onConnect({ address, connector, isReconnected }) {
-        console.log('Connected', { address, connector, isReconnected })
-      },
-    });
 
 
     const contractConfig = {
@@ -49,28 +68,28 @@ export default function MintComp(){
 
 
     //------------------MINT------------------------------------------------
-    const { config: contractWriteConfig } = usePrepareContractWrite({
-        ...contractConfig,
-        functionName: 'mint',
-        args:[mintAmount],
-        overrides: {
-          from: address,
-          value: ethers.utils.parseEther('0.03').mul(mintAmount).toString()
-        },
-      });
+    // const { config: contractWriteConfig } = usePrepareContractWrite({
+    //     ...contractConfig,
+    //     functionName: 'mint',
+    //     args:[mintAmount],
+    //     overrides: {
+    //       from: addy,
+    //       value: ethers.utils.parseEther('0.03').mul(mintAmount).toString()
+    //     },
+    //   });
 
-      const {
-        data: mintData,
-        write: mint,
-        isLoading: isMintLoading,
-        isSuccess: isMintStarted,
-        error: mintError,
-      } = useContractWrite(contractWriteConfig);
+    //   const {
+    //     data: mintData,
+    //     write: mint,
+    //     isLoading: isMintLoading,
+    //     isSuccess: isMintStarted,
+    //     error: mintError,
+    //   } = useContractWrite(contractWriteConfig);
 
 
       const mintP = () =>{
-        if((mintAmount > 0) && address){
-          console.log("trying to mint: ", mintAmount, address, totalMinted)
+        if((mintAmount > 0) && addy){
+          console.log("trying to mint: ", mintAmount, addy, totalMinted)
           contractWrite();
           console.log("report ",mintData2, isMintLoading2, isMintStarted2, mintError2 );
     
@@ -79,12 +98,13 @@ export default function MintComp(){
       
       const{data: mintData2, write: contractWrite, isLoading: isMintLoading2, isSuccess: isMintStarted2, error: mintError2}  = useContractWrite({
         mode: 'recklesslyUnprepared',
-        addressOrName: '0x7399206Fd5B8a9418fe2beaE55c4cA34DDDd5442',
-        contractInterface: contractInterface,
+        address: '0x7399206Fd5B8a9418fe2beaE55c4cA34DDDd5442',
+        abi: contractInterface,
         functionName: 'mint',
-        args:mintAmount,
+        chainId:1,
+        args:[mintAmount],
         overrides: {
-          from: address,
+          from: addy,
           value: ethers.utils.parseEther('0.03').mul(mintAmount).toString()
           ,
         },
@@ -106,19 +126,6 @@ export default function MintComp(){
 
   //-----------SUPPLY MINTED---------------------
 
-  const { data: totalSupplyData } = useContractRead({
-    ...contractConfig,
-    functionName: 'totalSupply',
-    watch: true,
-  });
-
-  useEffect(() => {
-    if (totalSupplyData) {
-      setTotalMinted(totalSupplyData.toNumber());
-    }
-  }, [totalSupplyData]);
-
-
 
 
     //-------------------------------------------------------------
@@ -128,10 +135,12 @@ export default function MintComp(){
         if(account.address){
       
           setAddress((account.address).toString());
+          getS();
       
         }
       
       }, [account]);
+
     
 
     
@@ -176,7 +185,7 @@ export default function MintComp(){
         </Select>
         <FormHelperText>0.03 eth/nft</FormHelperText>
       </FormControl>
-      <Button  sx={{m: 1,  width: 135}} size="large" variant="contained" color="primary" disabled>Mint</Button>
+      <Button onClick={() => mintP?.()} sx={{m: 1,  width: 135}} size="large" variant="contained" color="primary" disabled={!addy}>Mint</Button>
       </div>
 
         </div>

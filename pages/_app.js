@@ -5,54 +5,45 @@ import Image from 'next/image';
 import NavBar from '../components/NavBar';
 import { Roboto } from '@next/font/google';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import '@rainbow-me/rainbowkit/styles.css';
-import {
-  RainbowKitProvider,
-  getDefaultWallets,
-  darkTheme,
-  lightTheme,
-  Theme,
-  connectorsForWallets,
-  wallet,
-  AvatarComponent,
-} from '@rainbow-me/rainbowkit';
-import { chain, createClient, configureChains, WagmiConfig, mainnet } from 'wagmi';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { infuraProvider } from 'wagmi/providers/infura';
-import { publicProvider } from 'wagmi/providers/public';
 import { merge } from 'lodash';
 
+import "@rainbow-me/rainbowkit/styles.css";
+import {
+  ConnectButton,
+  themes,
+  lightTheme,
+  getDefaultWallets,
+  RainbowKitProvider
+} from "@rainbow-me/rainbowkit";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { infuraProvider } from "wagmi/providers/infura";
+import { publicProvider } from "wagmi/providers/public";
 
-//------------------------rainbowkit----------------------------------
-
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, provider } = configureChains(
   [mainnet],
-  [publicProvider()],
-)
-
-const { wallets } = getDefaultWallets({
-  appName: 'pepethereum',
-  chains,
-});
-
-const demoAppInfo = {
-  appName: 'pepethereum',
-};
+  [
+    alchemyProvider({ apiKey: process.env.ALCHEMY_API, priority: 0 }),
+    infuraProvider({ apiKey: process.env.INFURA_API, priority: 1 }),
+    publicProvider({ priority: 2 }),
+  ]
+);
 
 const { connectors } = getDefaultWallets({
-  appName: 'pepethereum',
+  appName: "My RainbowKit App",
   chains
 });
 
-
-
-const client = createClient({
+const wagmiClient = createClient({
   autoConnect: true,
   connectors,
-  provider,
-  webSocketProvider,
-})
+  provider
+});
 
+
+
+//------------------------rainbowkit----------------------------------
 
 const myTheme = merge(lightTheme(), {
   colors: {
@@ -93,8 +84,7 @@ const theme = createTheme({
 export default function App({ Component, pageProps }) {
   return( 
     <>
-      <WagmiConfig client={client}>
-      <RainbowKitProvider theme={myTheme} appInfo={demoAppInfo} chains={chains} coolMode>
+
     <ThemeProvider theme={theme}>
       <Head>
         <title>pepethereum</title>
@@ -111,6 +101,8 @@ export default function App({ Component, pageProps }) {
         }
       `}</style>
       </Head>
+      <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider theme={myTheme} chains={chains} coolMode>
       
       <div className={styles.nav}>
         <NavBar />
@@ -120,9 +112,10 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
 
       </main>
-      </ThemeProvider>
+      
       </RainbowKitProvider>
     </WagmiConfig>
+    </ThemeProvider>
   
 
   </>
