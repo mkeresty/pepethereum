@@ -127,7 +127,7 @@ export default function MintComp(){
 
         if(account.address){
       
-          setAddress(account.address);
+          setAddress((account.address).toString());
       
         }
       
