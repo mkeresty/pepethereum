@@ -66,6 +66,28 @@ export default function MintComp(){
         isSuccess: isMintStarted,
         error: mintError,
       } = useContractWrite(contractWriteConfig);
+
+
+      const mintP = () =>{
+        if((mintAmount > 0) && address){
+          console.log("trying to mint: ", mintAmount)
+          contractWrite();
+    
+        }
+      }
+      
+      const{data: mintData2, write: contractWrite, isLoading: isMintLoading2, isSuccess: isMintStarted2, error: mintError2}  = useContractWrite({
+        mode: 'recklesslyUnprepared',
+        addressOrName: '0x7399206Fd5B8a9418fe2beaE55c4cA34DDDd5442',
+        contractInterface: contractInterface,
+        functionName: 'mint',
+        args:[mintAmount],
+        overrides: {
+          from: address,
+          value: ethers.utils.parseEther('0.03').mul(mintAmount).toString()
+          ,
+        },
+      })
     //----------TRACK TRANSACTION---------------------------------------
 
         const {
@@ -151,7 +173,7 @@ export default function MintComp(){
         </Select>
         <FormHelperText>0.03 eth/nft</FormHelperText>
       </FormControl>
-      <Button onClick={() => mint?.()} sx={{m: 1,  width: 135}} size="large" variant="contained" color="primary" >Mint</Button>
+      <Button onClick={() => mintP()} sx={{m: 1,  width: 135}} size="large" variant="contained" color="primary" >Mint</Button>
       </div>
 
         </div>
