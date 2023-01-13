@@ -82,7 +82,7 @@ export default function MintComp(){
         addressOrName: '0x7399206Fd5B8a9418fe2beaE55c4cA34DDDd5442',
         contractInterface: contractInterface,
         functionName: 'mint',
-        args:[mintAmount],
+        args:mintAmount,
         overrides: {
           from: address,
           value: ethers.utils.parseEther('0.03').mul(mintAmount).toString()
