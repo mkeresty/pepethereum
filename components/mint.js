@@ -72,6 +72,7 @@ export default function MintComp(){
         if((mintAmount > 0) && address){
           console.log("trying to mint: ", mintAmount)
           contractWrite();
+          console.log("report ",mintData2, isMintLoading2, isMintStarted2, mintError2 );
     
         }
       }
