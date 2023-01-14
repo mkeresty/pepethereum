@@ -171,6 +171,8 @@ else {
           No two frogs are the same. The pastel shades of each trait are created by hashing the trait id and token id then converting the hash to an hsl color code.
           </p>
           <br/>
+          Note that this is not associated with the official Pepe. This is a eth/usdc price indicatir that is paying homage to the popular meme in a unique way.
+          <br/>
           Made w ❤️ by mason.og
         </div>
         
