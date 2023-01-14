@@ -55,7 +55,7 @@ export default function NavBar() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={() => openInNewTab('https://github.com/mkeresty/pepethereum')}><img style={{width:'30px', marginRight: '5px'}} src={'os.svg'}/>Opensea</MenuItem>
+        <MenuItem onClick={() => openInNewTab('https://opensea.io/collection/pepethereum-nft')}><img style={{width:'30px', marginRight: '5px'}} src={'os.svg'}/>Opensea</MenuItem>
         <MenuItem onClick={() => openInNewTab('https://github.com/mkeresty/pepethereum')}><img style={{width:'30px', marginRight: '5px'}} src={'github.svg'} />Github</MenuItem>
         <MenuItem onClick={() => openInNewTab('https://twitter.com/m_keresty')}><img style={{width:'30px', marginRight: '5px'}} src={'twitter.svg'} />Twitter</MenuItem>
       </Menu>
